@@ -12,7 +12,6 @@ function handleRequest(req, res) {
     req.on("end", () => {
     if (req.method === "POST" && req.url === "/form") {
         let result = qs.parse(store);
-        console.log(JSON.stringify(result));
         res.end(JSON.stringify(result));
     }
     if (req.method === "POST" && req.url === "/json") {
