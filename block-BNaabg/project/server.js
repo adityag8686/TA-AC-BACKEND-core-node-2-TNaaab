@@ -36,9 +36,10 @@ function handleRequest(req,res){
         }
         if (parsedUrl.pathname === "/users" && req.method === "GET") {
             let fileName = parsedUrl.query.username;
-            fs.readFile(userDir + fileName + ".json", "utf8", (err, user) => {
+            fs.readFile(userDir + fileName + ".json", "utf8", (err, content) => {
 
-                if (error) return console.log(error);
+                if (err) return console.log(err);
+                res.setHeader("Content-Type", "application/json")
                 res.end(content);
             });
         }
@@ -46,6 +47,7 @@ function handleRequest(req,res){
             //here we are deleting  the user data based on a username
             fs.unlink(userDir + parsedUrl.query.username + ".json", (err) => {
                 if (err) return console.log(err);
+                res.end(`${parsedData.username} is deleted successfully`);
             });
         }
         if (req.method === "PUT" && parsedUrl.pathname === "/users") {
